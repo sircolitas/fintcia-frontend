@@ -546,7 +546,6 @@
             btnEnviar.disabled = true; loading.classList.remove('hidden'); resultado.classList.add('hidden');
 
             try {
-                // El backend SOLO extrae los datos con IA
                 const response = await fetch('https://fintcia-backend.onrender.com/procesar-comprobante', {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${session.access_token}` },
@@ -563,7 +562,7 @@
                     resultado.classList.remove('hidden');
                 }
             } catch (error) {
-                resultado.textContent = '❌ Error de conexión al escanear. El servidor no responde.';
+                resultado.textContent = '❌ Error de conexión al escaner. El servidor no responde.';
                 resultado.classList.remove('hidden');
             } finally {
                 btnEnviar.disabled = false; loading.classList.add('hidden');
@@ -590,7 +589,7 @@
                     <th class="px-4 py-3">Descripción (Ítem)</th>
                     <th class="px-4 py-3">Total Línea</th>
                     <th class="px-4 py-3">Cta. Contable <span class="text-red-500">*</span></th>
-                    <th class="px-4 py-3">C. Costo</th>
+                    <th class="px-4 py-3">Centro Costo</th>
                 `;
             }
 
@@ -644,7 +643,7 @@
             datosPendientes = [];
         });
 
-        // RE-PROGRAMADO: GUARDADO DIRECTO CON EL 100% DE DATOS (Spread Operator)
+        // RE-PROGRAMADO: ELIMINACIÓN DE ID Y ASIGNACIÓN SEGURA DE CUENTAS
         document.getElementById('btnConfirmar').addEventListener('click', async () => {
             const btnConfirmar = document.getElementById('btnConfirmar');
             const { data: { user } } = await clienteSupabase.auth.getUser();
@@ -664,7 +663,6 @@
                         ctaSelect.classList.remove('border-red-500', 'bg-red-50');
                     }
                     
-                    // Asignamos directamente al objeto fila
                     fila.cuenta_contable = ctaSelect.value;
                     fila.centro_costo = ccSelect.value || "Sin asignar";
                 });
@@ -683,13 +681,16 @@
             btnConfirmar.disabled = true; btnConfirmar.textContent = "Guardando...";
 
             try {
-                // Aquí aplicamos el truco "...fila" para empaquetar TODO lo que extrajo la IA
-                const filasParaGuardar = datosPendientes.map(fila => ({
-                    ...fila,
-                    user_id: user.id
-                }));
+                // Preparamos los datos limpiando cualquier ID heredado para evitar el error de llave duplicada
+                const filasParaGuardar = datosPendientes.map(fila => {
+                    const copia = { ...fila };
+                    delete copia.id; // Evita conflictos con la clave primaria de Supabase
+                    return {
+                        ...copia,
+                        user_id: user.id
+                    };
+                });
 
-                // Guardado Directo a Supabase
                 const { error: dbError } = await clienteSupabase
                     .from('maestro_comprobantes')
                     .insert(filasParaGuardar);
@@ -698,12 +699,11 @@
                     throw new Error("Supabase rechazó el guardado: " + dbError.message);
                 }
 
-                // Si llega aquí, fue un éxito total.
                 limpiarInputArchivo(); 
                 actualizarDashboard(); 
                 
                 const resultado = document.getElementById('resultado');
-                resultado.textContent = `✅ ¡Guardado Exitoso! Todos los datos, cantidades y centros de costo fueron registrados en la base de datos.`;
+                resultado.textContent = `✅ ¡Guardado Exitoso! Cuentas contables, centros de costo y datos completos registrados.`;
                 resultado.classList.remove('hidden');
                 
             } catch (error) {
