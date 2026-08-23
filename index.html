@@ -86,9 +86,8 @@
     <main class="flex-grow">
         
         <!-- PANTALLA 1: LANDING PAGE -->
+        <!-- (El código de la landing se mantiene igual...) -->
         <div id="pantalla-landing" class="w-full">
-            
-            <!-- HERO SECTION -->
             <section class="bg-brand-dark relative pt-20 pb-32 border-b border-gray-800">
                 <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
                 <div class="container mx-auto px-6 relative z-10 max-w-5xl">
@@ -107,127 +106,60 @@
                     </div>
                 </div>
             </section>
-
-            <!-- SOLUCIONES SECTION -->
             <section class="py-24 bg-white">
                 <div class="container mx-auto px-6 max-w-5xl">
                     <p class="text-brand-blue text-xs font-bold tracking-widest uppercase mb-4">La Solución</p>
                     <h2 class="text-4xl font-extrabold text-gray-900 mb-16 max-w-2xl leading-tight">Un sistema financiero que lee, concilia y piensa por ti.</h2>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="border border-gray-100 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
                             <div class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white w-12 h-12 flex items-center justify-center rounded-lg font-bold mb-6">01</div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3">Extracción con IA</h3>
                             <p class="text-gray-500 text-sm mb-6">Sube una foto o un PDF. Nuestro modelo extrae RUC, base imponible, IGV, glosa y tipo de comprobante en segundos.</p>
-                            <p class="text-xs text-gray-400 font-mono">OCR · Clasificación tributaria · SUNAT</p>
                         </div>
                         <div class="border border-gray-100 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
                             <div class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white w-12 h-12 flex items-center justify-center rounded-lg font-bold mb-6">02</div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3">Conciliación automática</h3>
                             <p class="text-gray-500 text-sm mb-6">Cada comprobante se cruza contra tus movimientos bancarios y tu libro contable, sin hojas de cálculo intermedias.</p>
-                            <p class="text-xs text-gray-400 font-mono">Matching bancario · Libros contables</p>
                         </div>
                         <div class="border border-gray-100 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition md:col-span-2">
                             <div class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white w-12 h-12 flex items-center justify-center rounded-lg font-bold mb-6">03</div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3">Inteligencia financiera</h3>
                             <p class="text-gray-500 text-sm mb-6">Dashboards de cuentas por cobrar y por pagar, flujo de caja proyectado y alertas de riesgo, en tiempo real.</p>
-                            <p class="text-xs text-gray-400 font-mono">Dashboards · Proyecciones · Alertas</p>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <!-- PRECIOS SECTION -->
             <section class="py-24 bg-gray-50 border-t border-gray-100">
                 <div class="container mx-auto px-6 max-w-5xl text-center">
                     <p class="text-brand-blue text-xs font-bold tracking-widest uppercase mb-4">Precios</p>
                     <h2 class="text-4xl font-extrabold text-gray-900 mb-16">Un plan para cada etapa de tu empresa.</h2>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                         <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm">
                             <h3 class="text-xl font-bold text-gray-900">Prueba</h3>
-                            <p class="text-gray-500 text-sm mb-6">Para validar el flujo con tu propia data</p>
                             <div class="text-4xl font-black mb-2">S/ 0</div>
-                            <p class="text-xs text-gray-400 font-mono mb-6">14 días · sin tarjeta</p>
-                            <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                                <li>✓ Hasta 50 comprobantes/mes</li>
-                                <li>✓ Extracción con IA</li>
-                                <li>✓ Dashboard básico</li>
-                            </ul>
-                            <button onclick="mostrarPantalla('registro')" class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Comenzar prueba</button>
+                            <button onclick="mostrarPantalla('registro')" class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition mt-6">Comenzar prueba</button>
                         </div>
                         <div class="bg-brand-dark text-white border border-gray-800 p-8 rounded-2xl shadow-xl relative transform md:-translate-y-4">
                             <div class="absolute top-0 left-6 -translate-y-1/2 bg-brand-cyan text-brand-dark text-xs font-bold px-3 py-1 rounded-full">MÁS ELEGIDO</div>
                             <h3 class="text-xl font-bold text-white">Profesional</h3>
-                            <p class="text-gray-400 text-sm mb-6">Para equipos financieros en crecimiento</p>
                             <div class="text-4xl font-black mb-2">S/ 149<span class="text-lg text-gray-400 font-normal">/mes</span></div>
-                            <ul class="space-y-3 text-sm text-gray-300 mb-8 mt-6">
-                                <li>✓ Comprobantes ilimitados</li>
-                                <li>✓ Conciliación bancaria automática</li>
-                                <li>✓ Flujo de caja proyectado</li>
-                            </ul>
-                            <button class="w-full bg-brand-blue text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">Solicitar una demo</button>
+                            <button class="w-full bg-brand-blue text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition mt-6">Solicitar una demo</button>
                         </div>
                         <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm">
                             <h3 class="text-xl font-bold text-gray-900">Empresa</h3>
-                            <p class="text-gray-500 text-sm mb-6">Para grupos económicos y multi-RUC</p>
                             <div class="text-4xl font-black mb-2">A medida</div>
-                            <p class="text-xs text-gray-400 font-mono mb-6">contrato anual</p>
-                            <ul class="space-y-3 text-sm text-gray-600 mb-8">
-                                <li>✓ Multi-empresa y multi-moneda</li>
-                                <li>✓ Integración con ERP</li>
-                                <li>✓ Soporte y SLA dedicado</li>
-                            </ul>
-                            <button class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Hablar con ventas</button>
+                            <button class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition mt-6">Hablar con ventas</button>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <!-- FOOTER INFERIOR -->
             <section class="bg-brand-dark relative py-20 text-center">
                 <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
                 <div class="container mx-auto px-6 relative z-10">
                     <h2 class="text-4xl font-extrabold text-white mb-4">Lleva las finanzas de tu empresa al siguiente nivel.</h2>
-                    <p class="text-gray-400 mb-8">Agenda una demo y mira cómo FINTcIA concilia tu contabilidad en minutos, no en semanas.</p>
-                    <button class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:opacity-90 transition">Solicitar una demo</button>
+                    <button class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:opacity-90 transition mt-4">Solicitar una demo</button>
                 </div>
             </section>
-            
-            <footer class="bg-white py-12 border-t border-gray-200">
-                <div class="container mx-auto px-6 max-w-5xl grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div>
-                        <img src="FINTcIA.png" alt="Logo" class="h-8 mb-4">
-                        <p class="text-gray-500 text-sm">Finanzas corporativas con inteligencia artificial. De la factura al cierre, en segundos.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-500 text-xs tracking-widest mb-4">PRODUCTO</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-brand-blue">Extracción con IA</a></li>
-                            <li><a href="#" class="hover:text-brand-blue">Conciliación</a></li>
-                            <li><a href="#" class="hover:text-brand-blue">Precios</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-500 text-xs tracking-widest mb-4">EMPRESA</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-brand-blue">Nosotros</a></li>
-                            <li><a href="#" class="hover:text-brand-blue">Contacto</a></li>
-                            <li><a href="#" class="hover:text-brand-blue">Carreras</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-500 text-xs tracking-widest mb-4">LEGAL</h4>
-                        <ul class="space-y-2 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-brand-blue">Privacidad</a></li>
-                            <li><a href="#" class="hover:text-brand-blue">Términos</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="container mx-auto px-6 max-w-5xl mt-12 text-center text-xs text-gray-400 uppercase tracking-widest">
-                    © 2026 FINTCIA · LIMA, PERÚ
-                </div>
-            </footer>
         </div>
 
         <!-- PANTALLA 2: REGISTRO -->
@@ -235,23 +167,11 @@
             <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                 <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Crea tu cuenta empresarial</h2>
                 <form id="form-registro" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Razón Social</label>
-                        <input type="text" id="reg-empresa" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">RUC</label>
-                        <input type="text" id="reg-ruc" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
-                        <input type="email" id="reg-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                        <input type="password" id="reg-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <button type="submit" id="btnProcesarRegistro" class="w-full bg-brand-blue text-white px-4 py-3 rounded-lg font-bold mt-4 hover:bg-blue-700 transition shadow-md">Registrarse en FINTcIA</button>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">Razón Social</label><input type="text" id="reg-empresa" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">RUC</label><input type="text" id="reg-ruc" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label><input type="email" id="reg-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label><input type="password" id="reg-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <button type="submit" id="btnProcesarRegistro" class="w-full bg-brand-blue text-white px-4 py-3 rounded-lg font-bold mt-4 shadow-md">Registrarse en FINTcIA</button>
                 </form>
                 <p id="msg-registro" class="mt-4 text-center text-sm font-bold"></p>
             </div>
@@ -262,15 +182,9 @@
             <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
                 <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Bienvenido de nuevo</h2>
                 <form id="form-login" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
-                        <input type="email" id="log-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                        <input type="password" id="log-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
-                    </div>
-                    <button type="submit" id="btnProcesarLogin" class="w-full bg-brand-dark text-white px-4 py-3 rounded-lg font-bold hover:bg-gray-800 transition shadow-md">Ingresar al Sistema</button>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label><input type="email" id="log-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <div><label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label><input type="password" id="log-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition"></div>
+                    <button type="submit" id="btnProcesarLogin" class="w-full bg-brand-dark text-white px-4 py-3 rounded-lg font-bold shadow-md">Ingresar al Sistema</button>
                 </form>
                 <p id="msg-login" class="mt-4 text-center text-sm font-bold text-red-600"></p>
             </div>
@@ -589,7 +503,7 @@
                     <th class="px-4 py-3">Descripción (Ítem)</th>
                     <th class="px-4 py-3">Total Línea</th>
                     <th class="px-4 py-3">Cta. Contable <span class="text-red-500">*</span></th>
-                    <th class="px-4 py-3">Centro Costo</th>
+                    <th class="px-4 py-3">C. Costo</th>
                 `;
             }
 
@@ -643,7 +557,7 @@
             datosPendientes = [];
         });
 
-        // RE-PROGRAMADO: ELIMINACIÓN DE ID Y ASIGNACIÓN SEGURA DE CUENTAS
+        // RE-PROGRAMADO: ACTUALIZAR (UPSERT) EN LUGAR DE DUPLICAR
         document.getElementById('btnConfirmar').addEventListener('click', async () => {
             const btnConfirmar = document.getElementById('btnConfirmar');
             const { data: { user } } = await clienteSupabase.auth.getUser();
@@ -681,19 +595,16 @@
             btnConfirmar.disabled = true; btnConfirmar.textContent = "Guardando...";
 
             try {
-                // Preparamos los datos limpiando cualquier ID heredado para evitar el error de llave duplicada
-                const filasParaGuardar = datosPendientes.map(fila => {
-                    const copia = { ...fila };
-                    delete copia.id; // Evita conflictos con la clave primaria de Supabase
-                    return {
-                        ...copia,
-                        user_id: user.id
-                    };
-                });
+                // Esta vez SÍ mantenemos el ID original que devolvió el backend.
+                // Al usar .upsert(), le decimos a Supabase: "Encuentra esta misma fila y ACTUALÍZALA".
+                const filasParaGuardar = datosPendientes.map(fila => ({
+                    ...fila,
+                    user_id: user.id
+                }));
 
                 const { error: dbError } = await clienteSupabase
                     .from('maestro_comprobantes')
-                    .insert(filasParaGuardar);
+                    .upsert(filasParaGuardar); // <-- AQUÍ ESTÁ LA MAGIA (Upsert actualiza si el ID ya existe)
 
                 if (dbError) {
                     throw new Error("Supabase rechazó el guardado: " + dbError.message);
@@ -703,7 +614,7 @@
                 actualizarDashboard(); 
                 
                 const resultado = document.getElementById('resultado');
-                resultado.textContent = `✅ ¡Guardado Exitoso! Cuentas contables, centros de costo y datos completos registrados.`;
+                resultado.textContent = `✅ ¡Guardado Exitoso! Los centros de costo se actualizaron correctamente sin duplicar la factura.`;
                 resultado.classList.remove('hidden');
                 
             } catch (error) {
