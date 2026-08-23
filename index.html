@@ -644,7 +644,7 @@
             datosPendientes = [];
         });
 
-        // RE-PROGRAMADO: GUARDADO DIRECTO A LA BASE DE DATOS (Bypass al Backend)
+        // RE-PROGRAMADO: GUARDADO DIRECTO CON EL 100% DE DATOS (Spread Operator)
         document.getElementById('btnConfirmar').addEventListener('click', async () => {
             const btnConfirmar = document.getElementById('btnConfirmar');
             const { data: { user } } = await clienteSupabase.auth.getUser();
@@ -664,7 +664,7 @@
                         ctaSelect.classList.remove('border-red-500', 'bg-red-50');
                     }
                     
-                    // Aseguramos los valores
+                    // Asignamos directamente al objeto fila
                     fila.cuenta_contable = ctaSelect.value;
                     fila.centro_costo = ccSelect.value || "Sin asignar";
                 });
@@ -683,24 +683,13 @@
             btnConfirmar.disabled = true; btnConfirmar.textContent = "Guardando...";
 
             try {
-                // Creamos los objetos exactos a insertar en Supabase
+                // Aquí aplicamos el truco "...fila" para empaquetar TODO lo que extrajo la IA
                 const filasParaGuardar = datosPendientes.map(fila => ({
-                    user_id: user.id,
-                    ruc_emisor: fila.ruc_emisor,
-                    razon_social: fila.razon_social,
-                    fecha_emision: fila.fecha_emision,
-                    tipo_comprobante: fila.tipo_comprobante,
-                    serie: fila.serie,
-                    correlativo: fila.correlativo,
-                    tipo_operacion: fila.tipo_operacion,
-                    total_factura: fila.total_factura,
-                    descripcion: fila.descripcion,
-                    importe_total_linea: fila.importe_total_linea,
-                    cuenta_contable: fila.cuenta_contable,
-                    centro_costo: fila.centro_costo
+                    ...fila,
+                    user_id: user.id
                 }));
 
-                // Guardado Directo a Supabase saltándonos el Backend en Render
+                // Guardado Directo a Supabase
                 const { error: dbError } = await clienteSupabase
                     .from('maestro_comprobantes')
                     .insert(filasParaGuardar);
@@ -709,12 +698,12 @@
                     throw new Error("Supabase rechazó el guardado: " + dbError.message);
                 }
 
-                // Si llega aquí, fue un éxito rotundo.
+                // Si llega aquí, fue un éxito total.
                 limpiarInputArchivo(); 
                 actualizarDashboard(); 
                 
                 const resultado = document.getElementById('resultado');
-                resultado.textContent = `✅ ¡Guardado Exitoso! Centros de costo y cuentas registrados en la base de datos.`;
+                resultado.textContent = `✅ ¡Guardado Exitoso! Todos los datos, cantidades y centros de costo fueron registrados en la base de datos.`;
                 resultado.classList.remove('hidden');
                 
             } catch (error) {
@@ -736,7 +725,6 @@
             const { data: { user } } = await clienteSupabase.auth.getUser();
             if(!user) return;
 
-            // Se quitó el order('created_at') para evitar que colapse si tu tabla no tiene esa columna
             const { data, error } = await clienteSupabase
                 .from('maestro_comprobantes')
                 .select('*')
@@ -744,7 +732,6 @@
                 .limit(200);
 
             if (error) {
-                // Ahora si hay un error, lo imprimirá rojo y claro para saber qué columna falta en Supabase
                 tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-red-600 font-bold">Error Supabase: ${error.message}</td></tr>`;
                 return;
             }
@@ -752,7 +739,6 @@
             const facturasUnicas = [];
             const idsProcesados = new Set();
             
-            // Voltear el arreglo para ver primero los más recientes
             const dataReversa = data ? data.reverse() : [];
 
             dataReversa.forEach(fila => {
