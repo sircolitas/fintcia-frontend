@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINTcIA - Inteligencia Financiera</title>
+    <!-- Tailwind CSS (Configurado para igualar tu diseño) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#051126', // Azul muy oscuro de tu fondo
+                            blue: '#2563eb', // Azul botones
+                            cyan: '#06b6d4'  // Cyan gradientes
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Base de datos Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Efecto de cuadrícula (Grid) para el fondo oscuro */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #06b6d4, #2563eb);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- 1. BARRA DE NAVEGACIÓN (Blanca, fija) -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-6xl">
+            <!-- Logo Real -->
+            <div class="flex items-center gap-8">
+                <img src="FINTcIA.png" alt="FINTcIA Logo" class="h-10 object-contain cursor-pointer transition transform hover:scale-105" onclick="mostrarPantalla('landing')">
+
+                <!-- Menú Desplegable: Servicios -->
+                <div class="relative group hidden md:block">
+                    <button class="flex items-center gap-1 text-gray-600 hover:text-brand-blue font-medium transition py-2 text-sm">
+                        Servicios
+                        <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- Contenido del Dropdown -->
+                    <div class="absolute top-full left-0 mt-0 w-56 bg-white border border-gray-100 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <div class="p-2">
+                            <a href="#" onclick="abrirEscanerIA()" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-brand-blue rounded-lg transition font-medium">
+                                📸 Extracción con IA
+                            </a>
+                            <a href="#" class="block px-4 py-3 text-sm text-gray-400 cursor-not-allowed">
+                                ⚙️ Conciliación Automática
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Botones de Acción -->
+            <div id="nav-botones" class="flex items-center gap-4">
+                <button onclick="mostrarPantalla('login')" class="text-gray-600 hover:text-brand-blue font-medium text-sm transition">Iniciar sesión</button>
+                <button onclick="mostrarPantalla('registro')" class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md hover:opacity-90 transition">Solicitar una demo</button>
+            </div>
+            <!-- Usuario Logueado -->
+            <div id="nav-usuario" class="hidden flex items-center gap-4">
+                <button onclick="mostrarPantalla('dashboard')" class="text-brand-blue font-bold text-sm hover:underline">Mi Dashboard</button>
+                <button id="btnLogout" class="text-gray-500 hover:text-red-600 font-medium text-sm transition">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. CONTENIDO PRINCIPAL -->
+    <main class="flex-grow">
+        
+        <!-- PANTALLA 1: LANDING PAGE -->
+        <div id="pantalla-landing" class="w-full">
+            
+            <!-- HERO SECTION (Diseño Oscuro) -->
+            <section class="bg-brand-dark relative pt-20 pb-32 border-b border-gray-800">
+                <div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+                <div class="container mx-auto px-6 relative z-10 max-w-5xl">
+                    <div class="inline-block border border-gray-700 bg-gray-800/50 rounded-full px-4 py-1.5 mb-8">
+                        <span class="text-xs font-bold tracking-widest text-brand-cyan uppercase">● Finanzas corporativas con IA</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Tus finanzas se concilian solas. <span class="text-gradient">Tu equipo cierra en horas,</span> no en semanas.
+                    </h1>
+                    <p class="text-lg text-gray-400 mb-10 max-w-2xl leading-relaxed">
+                        FINTcIA lee cada factura y boleta, extrae RUC, base imponible e IGV, y concilia automáticamente tu contabilidad con tus movimientos reales — para que el cierre financiero deje de ser un cuello de botella.
+                    </p>
+                    <div class="flex gap-4">
+                        <button onclick="mostrarPantalla('registro')" class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white px-6 py-3 rounded-lg font-bold shadow-lg hover:opacity-90 transition">Solicitar una demo</button>
+                        <button class="border border-gray-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-800 transition">Ver cómo funciona ↓</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOLUCIONES SECTION -->
+            <section class="py-24 bg-white">
+                <div class="container mx-auto px-6 max-w-5xl">
+                    <p class="text-brand-blue text-xs font-bold tracking-widest uppercase mb-4">La Solución</p>
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-16 max-w-2xl leading-tight">Un sistema financiero que lee, concilia y piensa por ti.</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Card 1 -->
+                        <div class="border border-gray-100 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                            <div class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white w-12 h-12 flex items-center justify-center rounded-lg font-bold mb-6">01</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Extracción con IA</h3>
+                            <p class="text-gray-500 text-sm mb-6">Sube una foto o un PDF. Nuestro modelo extrae RUC, base imponible, IGV, glosa y tipo de comprobante en segundos.</p>
+                            <p class="text-xs text-gray-400 font-mono">OCR · Clasificación tributaria · SUNAT</p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="border border-gray-100 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                            <div class="bg-gradient-to-r from-brand-cyan to-brand-blue text-white w-12 h-12 flex items-center justify-center rounded-lg font-bold mb-6">02</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Conciliación automática</h3>
+                            <p class="text-gray-500 text-sm mb-6">Cada comprobante se cruza contra tus movimientos bancarios y tu libro contable, sin hojas de cálculo intermedias.</p>
+                            <p class="text-xs text-gray-400 font-mono">Matching bancario · Libros contables</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRECIOS SECTION -->
+            <section class="py-24 bg-gray-50 border-t border-gray-100">
+                <div class="container mx-auto px-6 max-w-5xl text-center">
+                    <p class="text-brand-blue text-xs font-bold tracking-widest uppercase mb-4">Precios</p>
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-16">Un plan para cada etapa de tu empresa.</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                        <!-- Free -->
+                        <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm">
+                            <h3 class="text-xl font-bold text-gray-900">Prueba</h3>
+                            <p class="text-gray-500 text-sm mb-6">Para validar el flujo con tu propia data</p>
+                            <div class="text-4xl font-black mb-2">S/ 0</div>
+                            <p class="text-xs text-gray-400 font-mono mb-6">14 días · sin tarjeta</p>
+                            <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                                <li>✓ Hasta 50 comprobantes/mes</li>
+                                <li>✓ Extracción con IA</li>
+                                <li>✓ Dashboard básico</li>
+                            </ul>
+                            <button onclick="mostrarPantalla('registro')" class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Comenzar prueba</button>
+                        </div>
+                        <!-- Pro -->
+                        <div class="bg-brand-dark text-white border border-gray-800 p-8 rounded-2xl shadow-xl relative transform md:-translate-y-4">
+                            <div class="absolute top-0 left-6 -translate-y-1/2 bg-brand-cyan text-brand-dark text-xs font-bold px-3 py-1 rounded-full">MÁS ELEGIDO</div>
+                            <h3 class="text-xl font-bold text-white">Profesional</h3>
+                            <p class="text-gray-400 text-sm mb-6">Para equipos financieros en crecimiento</p>
+                            <div class="text-4xl font-black mb-2">S/ 149<span class="text-lg text-gray-400 font-normal">/mes</span></div>
+                            <ul class="space-y-3 text-sm text-gray-300 mb-8 mt-6">
+                                <li>✓ Comprobantes ilimitados</li>
+                                <li>✓ Conciliación bancaria automática</li>
+                                <li>✓ Flujo de caja proyectado</li>
+                            </ul>
+                            <button class="w-full bg-brand-blue text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">Solicitar una demo</button>
+                        </div>
+                        <!-- Enterprise -->
+                        <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm">
+                            <h3 class="text-xl font-bold text-gray-900">Empresa</h3>
+                            <p class="text-gray-500 text-sm mb-6">Para grupos económicos y multi-RUC</p>
+                            <div class="text-4xl font-black mb-2">A medida</div>
+                            <p class="text-xs text-gray-400 font-mono mb-6">contrato anual</p>
+                            <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                                <li>✓ Multi-empresa y multi-moneda</li>
+                                <li>✓ Integración con ERP</li>
+                                <li>✓ Soporte y SLA dedicado</li>
+                            </ul>
+                            <button class="w-full border border-gray-300 text-gray-900 py-3 rounded-lg font-bold hover:bg-gray-50 transition">Hablar con ventas</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PANTALLA 2: REGISTRO -->
+        <div id="pantalla-registro" class="hidden container mx-auto py-20 max-w-md px-4">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Crea tu cuenta empresarial</h2>
+                <form id="form-registro" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Razón Social</label>
+                        <input type="text" id="reg-empresa" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">RUC</label>
+                        <input type="text" id="reg-ruc" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                        <input type="email" id="reg-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <input type="password" id="reg-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <button type="submit" id="btnProcesarRegistro" class="w-full bg-brand-blue text-white px-4 py-3 rounded-lg font-bold mt-4 hover:bg-blue-700 transition shadow-md">Registrarse en FINTcIA</button>
+                </form>
+                <p id="msg-registro" class="mt-4 text-center text-sm font-bold"></p>
+            </div>
+        </div>
+
+        <!-- PANTALLA 3: LOGIN -->
+        <div id="pantalla-login" class="hidden container mx-auto py-20 max-w-md px-4">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Bienvenido de nuevo</h2>
+                <form id="form-login" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                        <input type="email" id="log-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                        <input type="password" id="log-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue outline-none transition">
+                    </div>
+                    <button type="submit" id="btnProcesarLogin" class="w-full bg-brand-dark text-white px-4 py-3 rounded-lg font-bold hover:bg-gray-800 transition shadow-md">Ingresar al Sistema</button>
+                </form>
+                <p id="msg-login" class="mt-4 text-center text-sm font-bold text-red-600"></p>
+            </div>
+        </div>
+
+        <!-- PANTALLA 4: DASHBOARD Y ESCÁNER (Protegido) -->
+        <div id="pantalla-dashboard" class="hidden container mx-auto py-10 px-4 max-w-3xl">
+            <!-- DASHBOARD FINANCIERO -->
+            <div id="resumen-financiero" class="grid grid-cols-2 gap-4 mb-8 hidden">
+                <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm text-center">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest">Por Cobrar</h3>
+                    <p id="total-cobrar" class="text-3xl font-extrabold text-gray-900 mt-2">S/ 0.00</p>
+                </div>
+                <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm text-center">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest">Por Pagar</h3>
+                    <p id="total-pagar" class="text-3xl font-extrabold text-gray-900 mt-2">S/ 0.00</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Escáner de Inteligencia Artificial</h2>
+                        <p class="text-gray-500 text-sm mt-1">Sube un comprobante para extraer y clasificar los datos.</p>
+                    </div>
+                    <span class="bg-blue-50 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">BETA</span>
+                </div>
+                
+                <form id="formulario-escaner">
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center mb-6 hover:bg-gray-50 transition cursor-pointer relative">
+                        <input type="file" id="imagen" accept="image/*,application/pdf" capture="environment" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div id="texto-carga" class="text-gray-500">
+                            <span class="text-brand-blue font-bold">Haz clic para subir</span> o arrastra tu comprobante aquí
+                        </div>
+                    </div>
+                    <button type="submit" id="btnEnviar" class="w-full bg-brand-dark text-white px-4 py-3 rounded-lg font-bold hover:bg-gray-800 transition shadow-md">Procesar Documento</button>
+                </form>
+
+                <div id="loading" class="hidden mt-6 p-4 bg-gray-50 border border-gray-200 text-gray-700 rounded-lg text-center font-medium animate-pulse flex items-center justify-center">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    Analizando comprobante en los servidores...
+                </div>
+                <pre id="resultado" class="hidden mt-6 p-4 bg-gray-900 text-green-400 rounded-lg text-sm overflow-x-auto shadow-inner"></pre>
+            </div>
+        </div>
+    </main>
+
+    <!-- SCRIPTS LÓGICOS -->
+    <script>
+        // --- 1. CONFIGURACIÓN DE SUPABASE ---
+        const supabaseUrl = 'https://cqxajsixakwwjihnokqy.supabase.co'; 
+        const supabaseKey = 'sb_publishable_IxyLLObFVAI4sEpbZWWrjA_wnleNtO2'; 
+        const clienteSupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // --- 2. CONTROLADOR DE PANTALLAS ---
+        const pantallas = ['landing', 'registro', 'login', 'dashboard'];
+        
+        window.mostrarPantalla = function(pantallaObjetivo) {
+            pantallas.forEach(p => {
+                const elemento = document.getElementById(`pantalla-${p}`);
+                if(elemento) elemento.classList.add('hidden');
+            });
+            const objetivo = document.getElementById(`pantalla-${pantallaObjetivo}`);
+            if(objetivo) objetivo.classList.remove('hidden');
+            
+            // Si vamos al landing, scrolleamos arriba
+            if(pantallaObjetivo === 'landing') window.scrollTo(0, 0);
+        };
+
+        // --- 2.1 LÓGICA DEL MENÚ DESPLEGABLE (SERVICIOS) ---
+        window.abrirEscanerIA = async function() {
+            const { data: { session } } = await clienteSupabase.auth.getSession();
+            if (session) {
+                mostrarPantalla('dashboard');
+            } else {
+                alert("Para usar la Extracción con IA, por favor inicia sesión o solicita una demo.");
+                mostrarPantalla('login'); 
+            }
+        };
+
+        // --- 3. GESTIÓN DE SESIÓN ---
+        clienteSupabase.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                // Al loguearse, lo mandamos al escáner por defecto
+                mostrarPantalla('dashboard');
+                actualizarDashboard();
+                document.getElementById('nav-botones').classList.add('hidden');
+                document.getElementById('nav-usuario').classList.remove('hidden');
+            } else {
+                mostrarPantalla('landing');
+                document.getElementById('nav-botones').classList.remove('hidden');
+                document.getElementById('nav-usuario').classList.add('hidden');
+            }
+        });
+
+        // --- 3.5. ACTUALIZAR DASHBOARD FINANCIERO ---
+        async function actualizarDashboard() {
+            const { data: { user } } = await clienteSupabase.auth.getUser();
+            if(!user) return;
+
+            const { data, error } = await clienteSupabase
+                .from('maestro_comprobantes')
+                .select('serie, correlativo, total_factura, tipo_operacion')
+                .eq('user_id', user.id);
+
+            if (error || !data) return;
+
+            const facturasUnicas = [];
+            const facturasProcesadas = new Set();
+
+            data.forEach(fila => {
+                const idFactura = fila.serie + '-' + fila.correlativo;
+                if (!facturasProcesadas.has(idFactura)) {
+                    facturasProcesadas.add(idFactura);
+                    facturasUnicas.push(fila);
+                }
+            });
+
+            let totalCobrar = 0; let totalPagar = 0;
+            facturasUnicas.forEach(f => {
+                if(f.tipo_operacion === 'VENTA') totalCobrar += Number(f.total_factura);
+                if(f.tipo_operacion === 'COMPRA' || f.tipo_operacion === 'COMPRA_GASTO') totalPagar += Number(f.total_factura);
+            });
+
+            // Formato de moneda profesional (con comas de miles)
+            const formatter = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' });
+            document.getElementById('total-cobrar').innerText = formatter.format(totalCobrar);
+            document.getElementById('total-pagar').innerText = formatter.format(totalPagar);
+            document.getElementById('resumen-financiero').classList.remove('hidden');
+        }
+
+        // --- 4. CREAR CUENTA ---
+        document.getElementById('form-registro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnProcesarRegistro');
+            const msg = document.getElementById('msg-registro');
+            btn.disabled = true; btn.textContent = "Procesando...";
+
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const empresa = document.getElementById('reg-empresa').value;
+            const ruc = document.getElementById('reg-ruc').value;
+
+            const { data, error } = await clienteSupabase.auth.signUp({ 
+                email, password, options: { data: { razon_social: empresa, ruc: ruc } }
+            });
+
+            if (error) { 
+                msg.textContent = `❌ Error: ${error.message}`; 
+                msg.className = "mt-4 text-center text-sm font-bold text-red-600";
+            } else { 
+                msg.textContent = '✅ ¡Cuenta creada exitosamente! Revisa tu correo o inicia sesión.'; 
+                msg.className = "mt-4 text-center text-sm font-bold text-green-600";
+                document.getElementById('form-registro').reset();
+            }
+            btn.disabled = false; btn.textContent = "Registrarse en FINTcIA";
+        });
+
+        // --- 5. INICIAR SESIÓN ---
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnProcesarLogin');
+            const msg = document.getElementById('msg-login');
+            btn.disabled = true; btn.textContent = "Verificando...";
+
+            const email = document.getElementById('log-email').value;
+            const password = document.getElementById('log-password').value;
+
+            const { data, error } = await clienteSupabase.auth.signInWithPassword({ email, password });
+            
+            if (error) { 
+                msg.textContent = "Credenciales incorrectas o usuario no registrado."; 
+            }
+            btn.disabled = false; btn.textContent = "Ingresar al Sistema";
+        });
+
+        // --- 6. CERRAR SESIÓN ---
+        document.getElementById('btnLogout').addEventListener('click', async () => {
+            await clienteSupabase.auth.signOut();
+        });
+
+        // --- 7. ESCÁNER Y MANEJO DE ERRORES ---
+        function limpiarInputArchivo() {
+            document.getElementById('imagen').value = '';
+            document.getElementById('texto-carga').innerHTML = `<span class="text-brand-blue font-bold">Haz clic para subir</span> o arrastra tu comprobante aquí`;
+        }
+
+        document.getElementById('formulario-escaner').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('imagen');
+            const loading = document.getElementById('loading');
+            const resultado = document.getElementById('resultado');
+            const btnEnviar = document.getElementById('btnEnviar');
+
+            const { data: { session } } = await clienteSupabase.auth.getSession();
+            const formData = new FormData();
+            formData.append('imagen', fileInput.files[0]);
+
+            btnEnviar.disabled = true; loading.classList.remove('hidden'); resultado.classList.add('hidden');
+
+            try {
+                const response = await fetch('http://localhost:3000/procesar-comprobante', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${session.access_token}` },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                resultado.classList.remove('hidden');
+                
+                if(response.ok) {
+                    resultado.textContent = `✅ ¡Éxito!\nEl documento fue clasificado y guardado.`;
+                    actualizarDashboard(); 
+                } else {
+                    resultado.textContent = `❌ Error: ${data.error}\nPor favor, intenta subir la imagen nuevamente.`;
+                }
+            } catch (error) {
+                resultado.classList.remove('hidden');
+                resultado.textContent = '❌ Error de conexión. El servidor está apagado o no responde.';
+            } finally {
+                btnEnviar.disabled = false; 
+                loading.classList.add('hidden'); 
+                limpiarInputArchivo(); 
+            }
+        });
+
+        // --- 8. MOSTRAR NOMBRE DEL ARCHIVO CARGADO ---
+        // (Nota de auditoría: Se eliminó el listener duplicado que tenías en tu código anterior)
+        document.getElementById('imagen').addEventListener('change', function(e) {
+            const archivo = e.target.files[0];
+            const textoCarga = document.getElementById('texto-carga');
+            if (archivo) {
+                textoCarga.innerHTML = `📄 Documento listo:<br><span class="font-bold text-gray-900">${archivo.name}</span>`;
+            } else {
+                limpiarInputArchivo();
+            }
+        });
+    </script>
+</body>
+</html>

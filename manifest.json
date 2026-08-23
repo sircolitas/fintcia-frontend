@@ -1,0 +1,16 @@
+{
+  "name": "FINTcIA",
+  "short_name": "FINTcIA",
+  "description": "Inteligencia financiera y conciliación automática.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#051126",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "FINTcIA.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
